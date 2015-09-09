@@ -1,0 +1,24 @@
+{
+  "name": "mongo-easy-shard",
+  "version": "1.0.0",
+  "description": "Share MongoDB in the app layer",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kadirahq/mongo-easy-shard"
+  },
+  "keywords": [
+    "mongo",
+    "sharding",
+    "app"
+  ],
+  "author": "Arunoda Susiripala <arunoda.susiripala@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kadirahq/mongo-easy-shard/issues"
+  },
+  "homepage": "https://github.com/kadirahq/mongo-easy-shard"
+}
