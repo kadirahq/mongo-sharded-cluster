@@ -54,6 +54,25 @@ describe("MongoEasyShard", function() {
         es.stop();
       }, 450);
     });
+
+    it("should fire the callback only once", function(done) {
+      var es = new MongoEasyShard({lookupInterval: 100});
+      es.addShard("s1", {});
+      es._lookupDbSize = function(sharInfo, done) {
+        done();
+      };
+      
+      var count = 0;
+      es.startDbSizeLookup(function() {
+        count++;
+      });
+
+      setTimeout(function() {
+        assert.equal(count, 1);
+        done();
+        es.stop();
+      }, 450);
+    });
   })
 
   describe("getConnection", function() {
@@ -70,6 +89,29 @@ describe("MongoEasyShard", function() {
       var es = new MongoEasyShard();
       try{
         es.getConnection("s1");
+      } catch(ex) {
+        done();
+      }
+    });
+  });
+
+  describe("pickShard", function() {
+    it("should pick the minimum sized shard", function(done) {
+      var es = new MongoEasyShard();
+      es._started = true;
+      es._shardMap["s1"] = {name: "s1", size: 10};
+      es._shardMap["s2"] = {name: "s2", size: 1};
+      es._shardMap["s3"] = {name: "s3", size: 100};
+
+      var shardName = es.pickShard();
+      assert.equal(shardName, "s2");
+      done();
+    });
+
+    it("should throw an error, if not started", function(done) {
+      var es = new MongoEasyShard();
+      try {
+        es.pickShard();
       } catch(ex) {
         done();
       }
