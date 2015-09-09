@@ -4,7 +4,7 @@
   "description": "Share MongoDB in the app layer",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,14 @@
   "bugs": {
     "url": "https://github.com/kadirahq/mongo-easy-shard/issues"
   },
-  "homepage": "https://github.com/kadirahq/mongo-easy-shard"
+  "homepage": "https://github.com/kadirahq/mongo-easy-shard",
+  "dependencies": {
+    "async": "1.4.x",
+    "mongodb": "1.4.x",
+    "underscore": "1.8.x"
+  },
+  "devDependencies": {
+    "mocha": "2.3.x",
+    "mocha-mongo": "0.2.x"
+  }
 }
