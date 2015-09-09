@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kadirahq/mongo-easy-shard"
+    "url": "https://github.com/kadirahq/mongo-sharded-cluster"
   },
   "keywords": [
     "mongo",
@@ -18,9 +18,9 @@
   "author": "Arunoda Susiripala <arunoda.susiripala@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kadirahq/mongo-easy-shard/issues"
+    "url": "https://github.com/kadirahq/mongo-sharded-cluster/issues"
   },
-  "homepage": "https://github.com/kadirahq/mongo-easy-shard",
+  "homepage": "https://github.com/kadirahq/mongo-sharded-cluster",
   "dependencies": {
     "async": "1.4.x",
     "mongodb": "1.4.x",
