@@ -20,7 +20,7 @@ describe("MongoEasyShard", function() {
     }));
   })
 
-  describe("start", function() {
+  describe("startDbSizeLookup", function() {
     it("should lookup db size", drop(function(db, done) {
       var es = new MongoEasyShard();
       es.addShard("s1", db);
@@ -28,7 +28,7 @@ describe("MongoEasyShard", function() {
 
       db.collection('abc').insert({aa: 10}, function(err) {
         assert.ifError(err);
-        es.start();
+        es.startDbSizeLookup();
         setTimeout(function() {
           assert.equal(es._shardMap["s1"].size > 0, true);
           assert.equal(es._shardMap["s2"].size > 0, true);
@@ -46,7 +46,7 @@ describe("MongoEasyShard", function() {
         count++;
         done();
       };
-      es.start();
+      es.startDbSizeLookup();
 
       setTimeout(function() {
         assert.equal(count, 5);
