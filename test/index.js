@@ -19,4 +19,60 @@ describe("MongoEasyShard", function() {
       });
     }));
   })
+
+  describe("start", function() {
+    it("should lookup db size", drop(function(db, done) {
+      var es = new MongoEasyShard();
+      es.addShard("s1", db);
+      es.addShard("s2", db);
+
+      db.collection('abc').insert({aa: 10}, function(err) {
+        assert.ifError(err);
+        es.start();
+        setTimeout(function() {
+          assert.equal(es._shardMap["s1"].size > 0, true);
+          assert.equal(es._shardMap["s2"].size > 0, true);
+          es.stop();
+          done();
+        }, 200);
+      });
+    }));
+
+    it("should poll for the dbsize continously", function(done) {
+      var es = new MongoEasyShard({lookupInterval: 100});
+      es.addShard("s1", {});
+      var count = 0;
+      es._lookupDbSize = function(sharInfo, done) {
+        count++;
+        done();
+      };
+      es.start();
+
+      setTimeout(function() {
+        assert.equal(count, 5);
+        done();
+        es.stop();
+      }, 450);
+    });
+  })
+
+  describe("getConnection", function() {
+    it("should give the registerded connection", function(done) {
+      var es = new MongoEasyShard();
+      var conn = {};
+      es.addShard("s1", conn);
+      var c = es.getConnection("s1");
+      assert.equal(c, conn);
+      done();
+    }); 
+
+    it("should throw an error when there is no shard", function(done) {
+      var es = new MongoEasyShard();
+      try{
+        es.getConnection("s1");
+      } catch(ex) {
+        done();
+      }
+    });
+  });
 });
