@@ -1,12 +1,12 @@
-var MongoEasyShard = require('../lib/index.js');
+var MongoShardedCluster = require('../lib/index.js');
 var mongo = require("mocha-mongo")("mongodb://localhost/easy-shard");
 var drop = mongo.drop();
 var assert = require('assert');
 
-describe("MongoEasyShard", function() {
+describe("MongoShardedCluster", function() {
   describe("_lookupDbSize", function() {
     it("should look the db and store dbsize", drop(function(db, done) {
-      var es = new MongoEasyShard();
+      var es = new MongoShardedCluster();
       var shardInfo = {conn: db, size: null};
 
       db.collection('abc').insert({aa: 10}, function(err) {
@@ -22,7 +22,7 @@ describe("MongoEasyShard", function() {
 
   describe("startDbSizeLookup", function() {
     it("should lookup db size", drop(function(db, done) {
-      var es = new MongoEasyShard();
+      var es = new MongoShardedCluster();
       es.addShard("s1", db);
       es.addShard("s2", db);
 
@@ -39,7 +39,7 @@ describe("MongoEasyShard", function() {
     }));
 
     it("should poll for the dbsize continously", function(done) {
-      var es = new MongoEasyShard({lookupInterval: 100});
+      var es = new MongoShardedCluster({lookupInterval: 100});
       es.addShard("s1", {});
       var count = 0;
       es._lookupDbSize = function(sharInfo, done) {
@@ -56,7 +56,7 @@ describe("MongoEasyShard", function() {
     });
 
     it("should fire the callback only once", function(done) {
-      var es = new MongoEasyShard({lookupInterval: 100});
+      var es = new MongoShardedCluster({lookupInterval: 100});
       es.addShard("s1", {});
       es._lookupDbSize = function(sharInfo, done) {
         done();
@@ -77,7 +77,7 @@ describe("MongoEasyShard", function() {
 
   describe("getConnection", function() {
     it("should give the registerded connection", function(done) {
-      var es = new MongoEasyShard();
+      var es = new MongoShardedCluster();
       var conn = {};
       es.addShard("s1", conn);
       var c = es.getConnection("s1");
@@ -86,7 +86,7 @@ describe("MongoEasyShard", function() {
     }); 
 
     it("should throw an error when there is no shard", function(done) {
-      var es = new MongoEasyShard();
+      var es = new MongoShardedCluster();
       try{
         es.getConnection("s1");
       } catch(ex) {
@@ -97,7 +97,7 @@ describe("MongoEasyShard", function() {
 
   describe("pickShard", function() {
     it("should pick the minimum sized shard", function(done) {
-      var es = new MongoEasyShard();
+      var es = new MongoShardedCluster();
       es._started = true;
       es._shardMap["s1"] = {name: "s1", size: 10};
       es._shardMap["s2"] = {name: "s2", size: 1};
@@ -109,7 +109,7 @@ describe("MongoEasyShard", function() {
     });
 
     it("should throw an error, if not started", function(done) {
-      var es = new MongoEasyShard();
+      var es = new MongoShardedCluster();
       try {
         es.pickShard();
       } catch(ex) {

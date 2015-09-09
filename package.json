@@ -1,7 +1,7 @@
 {
-  "name": "mongo-easy-shard",
+  "name": "mongo-sharded-cluster",
   "version": "1.0.0",
-  "description": "Share MongoDB in the app layer",
+  "description": "Shard MongoDB in the app layer and build a MongoDB cluster",
   "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
