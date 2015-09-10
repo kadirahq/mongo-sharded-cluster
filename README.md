@@ -50,3 +50,28 @@ async.each(replSetUrls, function(replSetInfo, done) {
     });
 });
 ```
+
+
+### Initialize a Cluster With Environment Variables
+
+You can use following helper method to initialize a cluster without hassle.
+
+First make sure you have exports following env variables.
+
+```
+export MONGO_SHARD_URL_one=mongodb://localhost/one
+export MONGO_SHARD_URL_two=mongodb://localhost/two
+```
+
+Then you can get initialize a cluster like this:
+
+```js
+var MongoCluster = require('mongo-sharded-cluster');
+MongoCluster.initFromEnv(function(err, cluster) {
+    if(err) {
+        throw err;
+    }
+
+    // do anything with the cluster
+});
+```

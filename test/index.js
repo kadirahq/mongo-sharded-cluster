@@ -117,4 +117,21 @@ describe("MongoShardedCluster", function() {
       }
     });
   });
+
+  describe("initFromEnv", function() {
+    it("should init from the give env vars", function(done) {
+      process.env["MONGO_SHARD_URL_one"] = "mongodb://localhost/easy-shard";
+      process.env["MONGO_SHARD_URL_two"] = "mongodb://localhost/easy-shard";
+
+      MongoShardedCluster.initFromEnv(function(err, cluster) {
+        assert.ifError(err);
+        assert.ok(cluster.getConnection("one"));
+        assert.ok(cluster.getConnection("two"));
+
+        delete process.env["MONGO_SHARD_URL_one"];
+        delete process.env["MONGO_SHARD_URL_two"];
+        done();
+      });
+    });
+  });
 });
