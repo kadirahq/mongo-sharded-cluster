@@ -23,11 +23,11 @@
   "homepage": "https://github.com/kadirahq/mongo-sharded-cluster",
   "dependencies": {
     "async": "1.4.x",
-    "mongodb": "https://github.com/meteor/node-mongodb-native/tarball/634759e6326dc19a228df66ddb309285532f3b8a",
+    "mongodb": "^2.2.24",
     "underscore": "1.8.x"
   },
   "devDependencies": {
     "mocha": "2.3.x",
-    "mocha-mongo": "0.2.x"
+    "mocha-mongo": "^1.0.0"
   }
 }

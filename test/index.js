@@ -61,7 +61,7 @@ describe("MongoShardedCluster", function() {
       es._lookupDbSize = function(sharInfo, done) {
         done();
       };
-      
+
       var count = 0;
       es.startDbSizeLookup(function() {
         count++;
@@ -83,7 +83,7 @@ describe("MongoShardedCluster", function() {
       var c = es.getConnection("s1");
       assert.equal(c, conn);
       done();
-    }); 
+    });
 
     it("should throw an error when there is no shard", function(done) {
       var es = new MongoShardedCluster();
